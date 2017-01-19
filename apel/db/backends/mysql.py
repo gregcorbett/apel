@@ -30,7 +30,8 @@ from apel.db.records import BlahdRecord, \
                             ProcessedRecord, \
                             StorageRecord, \
                             SummaryRecord, \
-                            SyncRecord
+                            SyncRecord, \
+                            DataSetRecord
 import MySQLdb.cursors
 import datetime
 import logging
@@ -71,7 +72,8 @@ class ApelMysqlDb(object):
               CloudRecord : "CALL ReplaceCloudRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
               CloudSummaryRecord : "CALL ReplaceCloudSummaryRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
               StorageRecord: "CALL ReplaceStarRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-              GroupAttributeRecord: "CALL ReplaceGroupAttribute(%s, %s, %s)"
+              GroupAttributeRecord: "CALL ReplaceGroupAttribute(%s, %s, %s)",
+              DataSetRecord: "CALL ReplaceDataSetRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
               }
     
     def __init__(self, host, port, username, pwd, db):
@@ -132,10 +134,12 @@ class ApelMysqlDb(object):
             record_type = type(record_list[0])
 
             # Check that all the records are the same type as the first (except
-            # for Storage and GroupAttribute records).
+            # for Storage, DataSet and GroupAttribute records).
+            # This DOES NOT catch the case where DataSet and Storage records
+            # are in the same list.
             for record in record_list:
                 if (type(record) != record_type and type(record) not in
-                        (StorageRecord, GroupAttributeRecord)):
+                        (StorageRecord, DataSetRecord, GroupAttributeRecord)):
                     raise ApelDbException("Not all records in list are of type %s." % record_type)
 
             if replace:
@@ -158,9 +162,13 @@ class ApelMysqlDb(object):
             for record in record_list:
                 values = record.get_db_tuple(source)
                 log.debug('Values: %s', values)
-                if type(record) in (StorageRecord, GroupAttributeRecord):
-                    # These types can be found in the same record list, so need
-                    # to get the right proedure for each one.
+                if type(record) in (StorageRecord, DataSetRecord, GroupAttributeRecord):
+                    # StorageRecord+GroupAttributeRecord or
+                    # DataSetRecord+GroupAttributeRecord can be found in the
+                    # same record list, so need to get the 
+                    #right proedure for each one.
+                    # This DOES NOT catch the case where the list containes
+                    # a mix of StorageRecords and DataSetRecords only
                     proc = self.REPLACE_PROCEDURES[type(record)]
                 c.execute(proc, values)
             self.db.commit()
