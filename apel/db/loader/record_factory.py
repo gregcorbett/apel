@@ -31,6 +31,7 @@ from apel.db import (JOB_MSG_HEADER, SUMMARY_MSG_HEADER,
 from apel.db.loader.car_parser import CarParser
 from apel.db.loader.aur_parser import AurParser
 from apel.db.loader.star_parser import StarParser
+from apel.db.loader.dataset_parser import DSarParser
 from apel.db.loader.xml_parser import get_primary_ns
 
 import logging
@@ -77,6 +78,8 @@ class RecordFactory(object):
                     raise RecordFactoryException('Aggregated usage record not yet supported.')
                 elif primary_ns == StarParser.NAMESPACE:
                     created_records = self._create_stars(msg_text)
+                elif primary_ns == DSarParser.NAMESPACE:
+                    created_records = self._create_dsars(msg_text)
                 else:
                     raise RecordFactoryException('XML format not recognised.')
             # APEL format
@@ -258,6 +261,16 @@ class RecordFactory(object):
         '''
 
         parser = StarParser(msg_text)
+        records = parser.get_records()
+        return records
+
+    def _create_dsars(self, msg_text):
+        '''
+        Given a DSAR message in XML format, create a list of DataSetRecord
+        and GroupAttributes objects and return it.
+        '''
+
+        parser = DSarParser(msg_text)
         records = parser.get_records()
         return records 
     
