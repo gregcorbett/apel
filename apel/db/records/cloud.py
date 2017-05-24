@@ -44,7 +44,12 @@ class CloudRecord(Record):
                              "WallDuration", "CpuDuration", "CpuCount", 
                              "NetworkType", "NetworkInbound", "NetworkOutbound", "PublicIPCount", 
                              "Memory", "Disk", "BenchmarkType", "Benchmark", 
-                             "StorageRecordId", "ImageId", "CloudType"]
+                             "StorageRecordId", "ImageId", "CloudType",
+                             # Optional Accelerator fields
+                             "AcceleratorCount", "AcceleratorProcessors",
+                             "AcceleratorDuration", "AcceleratorWallDuration",
+                             "AcceleratorBenchmarkType", "AcceleratorBenchmark",
+                             "AcceleratorType"]
         
         # This list specifies the information that goes in the database.
         self._db_fields = self._msg_fields[:8] + ['VO', 'VOGroup', 'VORole'] + self._msg_fields[8:]
@@ -54,9 +59,12 @@ class CloudRecord(Record):
         
         # Fields which will have an integer stored in them
         self._int_fields = [ "SuspendDuration", "WallDuration", "CpuDuration", "CpuCount", 
-                             "NetworkInbound", "NetworkOutbound", "PublicIPCount", "Memory", "Disk"]
+                             "NetworkInbound", "NetworkOutbound", "PublicIPCount", "Memory", "Disk",
+                             "AcceleratorProcessors", "AcceleratorDuration",
+                             "AcceleratorWallDuration"]
         
-        self._float_fields = ['Benchmark']
+        self._float_fields = ['Benchmark',
+                              "AcceleratorCount", "AcceleratorBenchmark"]
         self._datetime_fields = ["StartTime", "EndTime"]
     
     def _check_fields(self):

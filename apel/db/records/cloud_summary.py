@@ -43,7 +43,12 @@ class CloudSummaryRecord(Record):
                             'WallDuration', 'CpuDuration', 'CpuCount',
                             'NetworkInbound', 'NetworkOutbound',
                             'Memory', 'Disk',
-                            'BenchmarkType', 'Benchmark', 'NumberOfVMs']
+                            'BenchmarkType', 'Benchmark', 'NumberOfVMs',
+                            # Optional Accelerator fields
+                            'AcceleratorCount', 'AcceleratorProcessors',
+                            'AcceleratorDuration', 'AcceleratorWallDuration',
+                            'AcceleratorBenchmarkType',
+                            'AcceleratorBenchmark']
 
         # This list specifies the information that goes in the database.
         self._db_fields = self._msg_fields
@@ -54,7 +59,10 @@ class CloudSummaryRecord(Record):
         # Fields which will have an integer stored in them
         self._int_fields = ['Month', 'Year', 'WallDuration', 'CpuDuration',
                             'CpuCount', 'NetworkInbound', 'NetworkOutbound',
-                            'Memory', 'Disk', 'NumberOfVMs']
+                            'Memory', 'Disk', 'NumberOfVMs',
+                            'AcceleratorProcessors', 'AcceleratorDuration',
+                            'AcceleratorWallDuration']
         
-        self._float_fields = ['Benchmark']
+        self._float_fields = ['Benchmark',
+                              'AcceleratorCount', 'AcceleratorBenchmark']
         self._datetime_fields = ['EarliestStartTime', 'LatestStartTime']
