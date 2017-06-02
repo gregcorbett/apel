@@ -109,8 +109,8 @@ class DSarParser(XMLParser):
 
             'RecordId': lambda nodes: self.getText(
                 nodes['RecordId'][0].childNodes).strip("\""),
-            'CreateTime': lambda nodes: parse_timestamp(self.getText(
-                nodes['CreateTime'][0].childNodes)),
+            'CreateTime': lambda nodes: self.getText(
+                nodes['CreateTime'][0].childNodes),
             'ResourceProvider': lambda nodes: self.getText(
                 nodes['ResourceProvider'][0].childNodes).strip("\""),
         }
@@ -145,12 +145,12 @@ class DSarParser(XMLParser):
                 nodes['Source'][0].childNodes).strip("\""),
             'Destination': lambda nodes: self.getText(
                 nodes['Destination'][0].childNodes).strip("\""),
-            'StartTime': lambda nodes: parse_timestamp(self.getText(
-                nodes['StartTime'][0].childNodes)),
+            'StartTime': lambda nodes: self.getText(
+                nodes['StartTime'][0].childNodes),
             'Duration': lambda nodes: self.getText(
                 nodes['Duration'][0].childNodes),
-            'EndTime': lambda nodes: parse_timestamp(self.getText(
-                nodes['EndTime'][0].childNodes)),
+            'EndTime': lambda nodes: self.getText(
+                nodes['EndTime'][0].childNodes),
             'TransferSize': lambda nodes: self.getText(
                 nodes['TransferSize'][0].childNodes),
             'HostType': lambda nodes: self.getText(
