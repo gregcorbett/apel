@@ -137,9 +137,13 @@ class DSarParser(XMLParser):
         If provided, the parsed information will be stored in data.
         """
         functions = {
-            'DataSet': lambda nodes: self.getText(
+            'DataSetID': lambda nodes: self.getText(
                 nodes['DataSet'][0].childNodes).strip("\""),
-            'AccessEvents': lambda nodes: self.getText(
+            'DataSetIDType': lambda nodes: self.getText(
+                nodes['DataSet'][0].childNodes).strip("\""),
+            'ReadAccessEvents': lambda nodes: self.getText(
+                nodes['AccessEvents'][0].childNodes),
+            'WriteAccessEvents': lambda nodes: self.getText(
                 nodes['AccessEvents'][0].childNodes),
             'Source': lambda nodes: self.getText(
                 nodes['Source'][0].childNodes).strip("\""),

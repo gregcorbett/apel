@@ -37,8 +37,9 @@ class DataSetRecord(Record):
 
     # This list specifies the information that goes in the database.
     DB_FIELDS = ["RecordId", "CreateTime", "ResourceProvider", "GlobalUserId",
-                 "GlobalGroupId", "ORCHID", "DataSet", "AccessEvents",
-                 "Source", "Destination", "StartTime", "Duration", "EndTime",
+                 "GlobalGroupId", "ORCHID", "DataSetID", "DataSetIDType",
+                 "ReadAccessEvents", "WriteAccessEvents", "Source",
+                 "Destination", "StartTime", "Duration", "EndTime",
                  "TransferSize", "HostType", "FileCount", "Status"]
 
     ALL_FIELDS = DB_FIELDS
@@ -62,7 +63,8 @@ class DataSetRecord(Record):
         self._datetime_fields = ["CreateTime", "StartTime", "EndTime"]
 
         # Fields which will have an integer stored in them
-        self._int_fields = ["AccessEvents", "TransferSize", "FileCount"]
+        self._int_fields = ["ReadAccessEvents", "WriteAccessEvents",
+                            "TransferSize", "FileCount"]
 
     def get_apel_db_insert(self, apel_db, source):
         """

@@ -20,8 +20,10 @@ CREATE TABLE DataSetRecords (
   ORCID                VARCHAR(255), -- ORCID of the user
 
   -- DataSet Usage Block
-  DataSet              VARCHAR(255), -- unique identifier such as a PI / DOI
-  AccessEvents         INT, -- Number of read and write operations
+  DataSetID            VARCHAR(255), -- unique identifier such as a PI / DOI
+  DataSetIDType        VARCHAR(255), -- type of unique identifier, i.e DOI, OneData Share etc
+  ReadAccessEvents     INT, -- Number of read operations
+  WriteAccessEvents     INT, -- Number of write operations
   Source               VARCHAR(255), -- Source of transfer at resource provider
   Destination          VARCHAR(255), -- Destination of transfer
   StartTime            DATETIME, -- Start time of transfer
@@ -38,20 +40,26 @@ DELIMITER //
 CREATE PROCEDURE ReplaceDataSetRecord(
   recordid VARCHAR(255), createtime DATETIME, resourceprovider VARCHAR(255),
   globaluserid VARCHAR(255), globalgroupid VARCHAR(255), orchid VARCHAR(255),
-  dataset VARCHAR(255), accessevents INT, source VARCHAR(255),
-  destination VARCHAR(255), starttime DATETIME, duration BIGINT,
-  endtime DATETIME, transfersize INT, hosttype VARCHAR(255), filecount INT, 
-  status VARCHAR(255))
+  datasetid VARCHAR(255), datasetidtype VARCHAR(255), readaccessevents INT,
+  writeaccessevents INT, source VARCHAR(255), destination VARCHAR(255),
+  starttime DATETIME, duration BIGINT, endtime DATETIME, transfersize INT,
+  hosttype VARCHAR(255), filecount INT, status VARCHAR(255))
 BEGIN
     REPLACE INTO DataSetRecords(
-      RecordId, CreateTime, ResourceProvider, GlobalUserId, GlobalGroupId,
-      ORCID, DataSet, AccessEvents, Source, Destination, StartTime,
-      Duration, EndTime, TransferSize, HostType, FileCount, Status
+      RecordId, CreateTime, ResourceProvider,
+      GlobalUserId, GlobalGroupId, ORCID,
+      DataSetID, DataSetIDType, ReadAccessEvents,
+      WriteAccessEvents, Source, Destination,
+      StartTime, Duration, EndTime, TransferSize,
+      HostType, FileCount, Status
     )
     VALUES (
-      recordid, createtime, resourceprovider, globaluserid, globalgroupid,
-      orchid, dataset, accessevents, source, destination, starttime,
-      duration, endtime, transfersize, hosttype, filecount, status
+      recordid, createtime, resourceprovider,
+      globaluserid, globalgroupid, orchid,
+      datasetid, datasetidtype, readaccessevents,
+      writeaccessevents, source, destination,
+      starttime, duration, endtime, transfersize,
+      hosttype, filecount, status
     );
 END //
 DELIMITER ;
