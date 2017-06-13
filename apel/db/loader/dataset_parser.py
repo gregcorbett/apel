@@ -138,13 +138,13 @@ class DSarParser(XMLParser):
         """
         functions = {
             'DataSetID': lambda nodes: self.getText(
-                nodes['DataSet'][0].childNodes).strip("\""),
+                nodes['DataSetID'][0].childNodes).strip("\""),
             'DataSetIDType': lambda nodes: self.getText(
-                nodes['DataSet'][0].childNodes).strip("\""),
+                nodes['DataSetIDType'][0].childNodes).strip("\""),
             'ReadAccessEvents': lambda nodes: self.getText(
-                nodes['AccessEvents'][0].childNodes),
+                nodes['ReadAccessEvents'][0].childNodes),
             'WriteAccessEvents': lambda nodes: self.getText(
-                nodes['AccessEvents'][0].childNodes),
+                nodes['WriteAccessEvents'][0].childNodes),
             'Source': lambda nodes: self.getText(
                 nodes['Source'][0].childNodes).strip("\""),
             'Destination': lambda nodes: self.getText(
