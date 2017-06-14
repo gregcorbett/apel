@@ -167,10 +167,64 @@ CloudType: OpenNebula
                          'Benchmark': 'None',
                          'ImageId': '\'scilin6\'',
                          'CloudType': 'OpenNebula'}
+
+        # A v0.4 style message with optional accelerator fields
+        self._msg4 = '''
+VMUUID: 2012-12-04 09:15:01+00:00 CESNET vm-0
+SiteName: CESNET
+CloudComputeService: OpenNebula Service A
+MachineName: 'one-0'
+LocalUserId: 5
+LocalGroupId: 1
+GlobalUserName: NULL
+FQAN: NULL
+Status: completed
+StartTime: 1318840264
+EndTime: 1318848076
+SuspendDuration: NULL
+WallDuration: NULL
+CpuDuration: NULL
+CpuCount: 1
+NetworkType: NULL
+NetworkInbound: 0
+NetworkOutbound: 0
+Memory: 512
+Disk: NULL
+BenchmarkType: Hepspec
+Benchmark: 1006.3
+StorageRecordId: NULL
+ImageId: 'scilin6'
+CloudType: OpenNebula
+AcceleratorCount: 0.2
+AcceleratorProcessors: 12
+AcceleratorDuration: 86400
+AcceleratorWallDuration: 86400
+AcceleratorBenchmarkType: NULL
+AcceleratorBenchmark: NULL
+'''
+
+        self._values4 = {'SiteName': 'CESNET',
+                         'CloudComputeService': 'OpenNebula Service A',
+                         'MachineName': '\'one-0\'',
+                         'LocalUserId': '5',
+                         'Status': 'completed',
+                         'CpuCount': 1,
+                         'PublicIPCount': None,
+                         'Memory': 512,
+                         'BenchmarkType': 'Hepspec',
+                         'Benchmark': 1006.3,
+                         'ImageId': '\'scilin6\'',
+                         'CloudType': 'OpenNebula',
+                         'AcceleratorCount': 0.2,
+                         'AcceleratorProcessors': 12,
+                         'AcceleratorDuration': 86400,
+                         'AcceleratorWallDuration': 86400}
+
         self.cases = {}
         self.cases[self._msg1] = self._values1
         self.cases[self._msg2] = self._values2
         self.cases[self._msg3] = self._values3
+        self.cases[self._msg4] = self._values4
 
     def test_load_from_msg(self):
         
