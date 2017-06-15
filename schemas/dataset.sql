@@ -23,7 +23,7 @@ CREATE TABLE DataSetRecords (
   DataSetID            VARCHAR(255), -- unique identifier such as a PI / DOI
   DataSetIDType        VARCHAR(255), -- type of unique identifier, i.e DOI, OneData Share etc
   ReadAccessEvents     INT, -- Number of read operations
-  WriteAccessEvents     INT, -- Number of write operations
+  WriteAccessEvents    INT, -- Number of write operations
   Source               VARCHAR(255), -- Source of transfer at resource provider
   Destination          VARCHAR(255), -- Destination of transfer
   StartTime            DATETIME, -- Start time of transfer
@@ -64,6 +64,71 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP TABLE IF EXISTS DataSetSummaries;
+CREATE TABLE DataSetSummaries (
+  UpdateTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  ResourceProvider        VARCHAR(255) NOT NULL, -- Resource provider at which
+                                                 -- the resource is located
+                                                 -- (e.g. GOCDB sitename)
+
+  GlobalUserId            VARCHAR(255), -- e.g. X.509 certificate DN or
+                                        -- EGI unique ID (from Checkin service)
+  GlobalGroupId           VARCHAR(255), -- e.g. VO
+  ORCID                   VARCHAR(255), -- ORCID of the user
+
+  DataSetID               VARCHAR(255), -- unique identifier such as a PI / DOI
+  DataSetIDType           VARCHAR(255), -- type of unique identifier, i.e DOI, OneData Share etc
+  TotalReadAccessEvents   BIGINT, -- Number of read operations
+  TotalWriteAccessEvents  BIGINT, -- Number of write operations
+  Source                  VARCHAR(255), -- Source of transfer at resource provider
+  Destination             VARCHAR(255), -- Destination of transfer
+  EarliestStartTime       DATETIME, -- Start time of transfer
+  TotalDuration           BIGINT, -- Duration of transfer
+  LatestStartTime         DATETIME, -- End time of transfer
+  Month                   INT NOT NULL,
+  Year                    INT NOT NULL,
+  TotalTransferSize       BIGINT, -- bytes transfered
+  HostType                VARCHAR(255), -- Storage system Type
+  TotalFileCount          BIGINT, -- Number of files accessed
+  Status                  VARCHAR(255) -- Success / failure / partial transfer
+);
+
+DROP PROCEDURE IF EXISTS SummariseDataSets;
+DELIMITER //
+CREATE PROCEDURE SummariseDataSets()
+BEGIN
+    REPLACE INTO DataSetSummaries(
+      ResourceProvider, GlobalUserId, GlobalGroupId, ORCID,
+      DataSetID, DataSetIDType, TotalReadAccessEvents, TotalWriteAccessEvents,
+      Source, Destination, EarliestStartTime, TotalDuration, LatestStartTime,
+      Month, Year, TotalTransferSize, HostType, TotalFileCount, Status)
+    SELECT
+      ResourceProvider,
+      GlobalUserId,
+      GlobalGroupId,
+      ORCID,
+      DataSetID,
+      DataSetIDType,
+      SUM(ReadAccessEvents),
+      SUM(WriteAccessEvents),
+      Source,
+      Destination,
+      MIN(StartTime),
+      SUM(Duration),
+      MAX(StartTime),
+      MONTH(StartTime) AS Month,
+      YEAR(StartTime) AS Year,
+      SUM(TransferSize),
+      HostType,
+      SUM(FileCount),
+      Status
+    FROM DataSetRecords
+    GROUP BY ResourceProvider, GlobalUserId, GlobalGroupId, ORCID,
+      DataSetID, DataSetIDType, Source, Destination, HostType, Status 
+    ORDER BY NULL;
+END //
+DELIMITER ;
 
 -- ------------------------------------------------------------------------------
 -- GroupAttributes
