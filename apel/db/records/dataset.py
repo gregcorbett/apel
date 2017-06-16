@@ -33,11 +33,13 @@ class DataSetRecord(Record):
     are in the same format as in the messages, and are case-sensitive.
     """
 
-    MANDATORY_FIELDS = ["RecordId", "CreateTime", "ResourceProvider"]
+    MANDATORY_FIELDS = ["RecordId", "CreateTime", "ResourceProvider",
+                        "Infrastructure"]
 
     # This list specifies the information that goes in the database.
-    DB_FIELDS = ["RecordId", "CreateTime", "ResourceProvider", "GlobalUserId",
-                 "GlobalGroupId", "ORCHID", "DataSetID", "DataSetIDType",
+    DB_FIELDS = ["RecordId", "CreateTime", "ResourceProvider",
+                 "Infrastructure", "GlobalUserId", "GlobalGroupId",
+                 "ORCHID", "DataSetID", "DataSetIDType",
                  "ReadAccessEvents", "WriteAccessEvents", "Source",
                  "Destination", "StartTime", "Duration", "EndTime",
                  "TransferSize", "HostType", "FileCount", "Status"]

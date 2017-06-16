@@ -113,6 +113,8 @@ class DSarParser(XMLParser):
                 nodes['CreateTime'][0].childNodes),
             'ResourceProvider': lambda nodes: self.getText(
                 nodes['ResourceProvider'][0].childNodes).strip("\""),
+            'Infrastructure': lambda nodes: self.getText(
+                nodes['Infrastructure'][0].childNodes).strip("\""),
         }
 
         # Here we copy keys from functions.

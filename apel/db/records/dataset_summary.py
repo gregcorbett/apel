@@ -40,8 +40,8 @@ class DataSetSummaryRecord(Record):
     MANDATORY_FIELDS = []
 
     # This list specifies the information that goes in the database.
-    DB_FIELDS = ["ResourceProvider", "GlobalUserId", "GlobalGroupId",
-                 "ORCID", "DataSetID", "DataSetIDType",
+    DB_FIELDS = ["ResourceProvider", "Infrastructure", "GlobalUserId",
+                 "GlobalGroupId", "ORCID", "DataSetID", "DataSetIDType",
                  "TotalReadAccessEvents", "TotalWriteAccessEvents",
                  "Source", "Destination", "EarliestStartTime", "TotalDuration",
                  "LatestStartTime", "Month", "Year", "TotalTransferSize",

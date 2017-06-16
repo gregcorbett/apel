@@ -11,6 +11,7 @@ CREATE TABLE DataSetRecords (
   ResourceProvider     VARCHAR(255) NOT NULL, -- Resource provider at which
                                               -- the resource is located 
                                               -- (e.g. GOCDB sitename)
+  Infrastructure       VARCHAR(255) NOT NULL, -- The high level entity, i.e. datahub.egi.eu
   
 
   -- Subject Identity Block
@@ -39,14 +40,15 @@ DROP PROCEDURE IF EXISTS ReplaceDataSetRecord;
 DELIMITER //
 CREATE PROCEDURE ReplaceDataSetRecord(
   recordid VARCHAR(255), createtime DATETIME, resourceprovider VARCHAR(255),
-  globaluserid VARCHAR(255), globalgroupid VARCHAR(255), orchid VARCHAR(255),
+  infrastructure VARCHAR(255), globaluserid VARCHAR(255),
+  globalgroupid VARCHAR(255), orchid VARCHAR(255),
   datasetid VARCHAR(255), datasetidtype VARCHAR(255), readaccessevents INT,
   writeaccessevents INT, source VARCHAR(255), destination VARCHAR(255),
   starttime DATETIME, duration BIGINT, endtime DATETIME, transfersize INT,
   hosttype VARCHAR(255), filecount INT, status VARCHAR(255))
 BEGIN
     REPLACE INTO DataSetRecords(
-      RecordId, CreateTime, ResourceProvider,
+      RecordId, CreateTime, ResourceProvider, Infrastructure,
       GlobalUserId, GlobalGroupId, ORCID,
       DataSetID, DataSetIDType, ReadAccessEvents,
       WriteAccessEvents, Source, Destination,
@@ -55,7 +57,8 @@ BEGIN
     )
     VALUES (
       recordid, createtime, resourceprovider,
-      globaluserid, globalgroupid, orchid,
+      infrastructure, globaluserid,
+      globalgroupid, orchid,
       datasetid, datasetidtype, readaccessevents,
       writeaccessevents, source, destination,
       starttime, duration, endtime, transfersize,
@@ -72,6 +75,7 @@ CREATE TABLE DataSetSummaries (
                                                  -- the resource is located
                                                  -- (e.g. GOCDB sitename)
 
+  Infrastructure          VARCHAR(255), -- -- The high level entity, i.e. datahub.egi.eu
   GlobalUserId            VARCHAR(255), -- e.g. X.509 certificate DN or
                                         -- EGI unique ID (from Checkin service)
   GlobalGroupId           VARCHAR(255), -- e.g. VO
@@ -99,12 +103,13 @@ DELIMITER //
 CREATE PROCEDURE SummariseDataSets()
 BEGIN
     REPLACE INTO DataSetSummaries(
-      ResourceProvider, GlobalUserId, GlobalGroupId, ORCID,
+      ResourceProvider, Infrastructure, GlobalUserId, GlobalGroupId, ORCID,
       DataSetID, DataSetIDType, TotalReadAccessEvents, TotalWriteAccessEvents,
       Source, Destination, EarliestStartTime, TotalDuration, LatestStartTime,
       Month, Year, TotalTransferSize, HostType, TotalFileCount, Status)
     SELECT
       ResourceProvider,
+      Infrastructure,
       GlobalUserId,
       GlobalGroupId,
       ORCID,
@@ -124,7 +129,7 @@ BEGIN
       SUM(FileCount),
       Status
     FROM DataSetRecords
-    GROUP BY ResourceProvider, GlobalUserId, GlobalGroupId, ORCID,
+    GROUP BY ResourceProvider, Infrastructure, GlobalUserId, GlobalGroupId, ORCID,
       DataSetID, DataSetIDType, Source, Destination, HostType, Status 
     ORDER BY NULL;
 END //
