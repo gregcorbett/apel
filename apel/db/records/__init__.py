@@ -36,3 +36,4 @@ from summary import SummaryRecord
 from normalised_summary import NormalisedSummaryRecord
 from sync import SyncRecord
 from dataset import DataSetRecord
+from dataset_summary import DataSetSummaryRecord

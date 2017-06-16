@@ -152,3 +152,20 @@ BEGIN
     VALUES (RecordId, attributeType, attributeValue);
 END //
 DELIMITER ;
+
+-- ------------------------------------------------------------------------------
+-- LastUpdated
+DROP TABLE IF EXISTS LastUpdated;
+CREATE TABLE LastUpdated (
+  UpdateTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  Type VARCHAR(255) PRIMARY KEY
+);
+
+DROP PROCEDURE IF EXISTS UpdateTimestamp;
+DELIMITER //
+CREATE PROCEDURE UpdateTimestamp(type VARCHAR(255)) 
+  BEGIN
+   REPLACE INTO LastUpdated (Type) VALUES (type);
+  END //
+
+DELIMITER ; 

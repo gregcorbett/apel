@@ -55,7 +55,7 @@ class DataSetRecord(Record):
         self._db_fields = DataSetRecord.DB_FIELDS
 
         # Fields which are accepted but currently ignored.
-        self._ignored_fields = []
+        self._ignored_fields = ["UpdateTime"]
 
         self._all_fields = self._db_fields
 
