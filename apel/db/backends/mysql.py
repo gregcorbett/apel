@@ -31,7 +31,8 @@ from apel.db.records import (BlahdRecord,
                              StorageRecord,
                              SummaryRecord,
                              SyncRecord,
-                             DataSetRecord)
+                             DataSetRecord,
+                             DataSetSummaryRecord)
 import MySQLdb.cursors
 import datetime
 import logging
@@ -73,7 +74,8 @@ class ApelMysqlDb(object):
               CloudSummaryRecord : "CALL ReplaceCloudSummaryRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
               StorageRecord: "CALL ReplaceStarRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
               GroupAttributeRecord: "CALL ReplaceGroupAttribute(%s, %s, %s)",
-              DataSetRecord: "CALL ReplaceDataSetRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+              DataSetRecord: "CALL ReplaceDataSetRecord(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+              DataSetSummaryRecord: "CALL ReplaceDataSetSummaryRecords(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
               }
     
     def __init__(self, host, port, username, pwd, db):

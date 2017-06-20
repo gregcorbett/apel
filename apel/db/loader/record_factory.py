@@ -274,4 +274,8 @@ class RecordFactory(object):
         records = parser.get_records()
         return records 
     
-    
+    def _create_dsar_summary(self, msg_text):
+        ''' Create a list of DataSetSummaryRecords from the input.'''
+        parser = DSSummaryParser(msg_text)
+        records = parser.get_records()
+        return records;

@@ -40,12 +40,13 @@ class DataSetSummaryRecord(Record):
     MANDATORY_FIELDS = []
 
     # This list specifies the information that goes in the database.
-    DB_FIELDS = ["ResourceProvider", "Infrastructure", "GlobalUserId",
-                 "GlobalGroupId", "ORCID", "DataSetID", "DataSetIDType",
-                 "TotalReadAccessEvents", "TotalWriteAccessEvents",
-                 "Source", "Destination", "EarliestStartTime", "TotalDuration",
-                 "LatestStartTime", "Month", "Year", "TotalTransferSize",
-                 "HostType", "TotalFileCount", "Status"]
+    DB_FIELDS = ["CreateTime", "ResourceProvider", "Infrastructure",
+                 "GlobalUserId", "GlobalGroupId", "ORCID", "DataSetID",
+                 "DataSetIDType", "TotalReadAccessEvents",
+                 "TotalWriteAccessEvents", "Source", "Destination",
+                 "EarliestStartTime", "TotalDuration", "LatestStartTime",
+                 "Month", "Year", "TotalTransferSize", "HostType",
+                  "TotalFileCount", "Status"]
 
     ALL_FIELDS = DB_FIELDS
 
@@ -65,7 +66,7 @@ class DataSetSummaryRecord(Record):
         self._all_fields = self._db_fields
 
         # Fields which will have a date time stored in them
-        self._datetime_fields = ["EarliestStartTime", "LatestStartTime"]
+        self._datetime_fields = ["CreateTime", "EarliestStartTime", "LatestStartTime"]
 
         # Fields which will have an integer stored in them
         self._int_fields = ["TotalReadAccessEvents", "TotalWriteAccessEvents",
@@ -81,17 +82,26 @@ class DataSetSummaryRecord(Record):
 
         create_time = self.get_field('CreateTime')
         cr_time = doc.createElement('ur:CreateTime')
-        cr_time.appendChild(doc.createTextNode(datetime.now().strftime('%Y-%m-%dT%H:%M:%S')))
-        ur.appendChild(cr_time)       
+        cr_time.appendChild(doc.createTextNode(datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')))
+        ur.appendChild(cr_time)
 
         for field in self._all_fields:
+           if field == 'CreateTime':
+               # skip as it is a special case
+               continue
+
            text = self.get_field(field)
+
            if text is None:
                if field in self._mandatory_fields:
                    raise InvalidRecordException('%s is mandatory but not in Database entry.' % field)
                else:
                    logger.debug('%s is None, skipping.' % field)
                    continue
+
+           # if it's a date time field, format it correctly
+           if field in self._datetime_fields:
+               text = text.strftime('%Y-%m-%dT%H:%M:%SZ')
 
            elem = doc.createElement('ur:%s' % field)
            elem.appendChild(doc.createTextNode(str(text)))

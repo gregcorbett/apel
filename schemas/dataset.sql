@@ -98,6 +98,38 @@ CREATE TABLE DataSetSummaries (
   Status                  VARCHAR(255) -- Success / failure / partial transfer
 );
 
+DROP PROCEDURE IF EXISTS ReplaceDataSetSummaryRecord;
+DELIMITER //
+CREATE PROCEDURE ReplaceDataSetSummaryRecord(
+  resourceprovider VARCHAR(255), infrastructure VARCHAR(255),
+  globaluserid VARCHAR(255), globalgroupid VARCHAR(255), orchid VARCHAR(255),
+  datasetid VARCHAR(255), datasetidtype VARCHAR(255), totalreadaccessevents INT,
+  totalwriteaccessevents INT, source VARCHAR(255), destination VARCHAR(255),
+  earlieststarttime DATETIME, duration BIGINT, lateststarttime DATETIME,
+  totaltransfersize INT, hosttype VARCHAR(255), totalfilecount INT,
+  status VARCHAR(255))
+BEGIN
+    REPLACE INTO DataSetRecords(
+      ResourceProvider, Infrastructure,
+      GlobalUserId, GlobalGroupId, ORCID,
+      DataSetID, DataSetIDType, TotalReadAccessEvents,
+      TotalWriteAccessEvents, Source, Destination,
+      EarliestStartTime, Duration, LatestEndTime,
+      TotalTransferSize, HostType, TotslFileCount,
+      Status
+    )
+    VALUES (
+      resourceprovider, infrastructure,
+      globaluserid, globalgroupid, orchid,
+      datasetid, datasetidtype, totalreadaccessevents,
+      totalwriteaccessevents, source, destination,
+      earlieststarttime, duration, latestendtime,
+      totaltransfersize, hosttype, totalfilecount,
+      status
+    );
+END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS SummariseDataSets;
 DELIMITER //
 CREATE PROCEDURE SummariseDataSets()
