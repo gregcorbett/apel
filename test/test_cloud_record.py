@@ -197,7 +197,7 @@ CloudComputeService: Test Service'''
                          'SuspendDuration': None,
                          'WallDuration': None,
                          'CpuDuration': None,
-                         'CpuCount': None,
+                         'CpuCount': 0,
                          'NetworkType': 'None',
                          'NetworkInbound': None,
                          'NetworkOutbound': None,
@@ -206,7 +206,6 @@ CloudComputeService: Test Service'''
                          'StorageRecordId': 'None',
                          'ImageId': 'Test Image ID',
                          'CloudType': 'caso/0.3.4 (OpenStack)'}
-
 
         self.cases = {}
         self.cases[self._msg1] = self._values1
