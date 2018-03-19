@@ -67,28 +67,45 @@ StorageRecordId: NULL
 ImageId: 'scilin6'
 CloudType: OpenNebula
 '''
-        self._values1 = {'SiteName': 'CESNET',
-                        'CloudComputeService': 'OpenNebula Service A', 
-                        'MachineName': '\'one-0\'',
-                        'LocalUserId': '5',
-                        'Status': 'completed',
-                        'CpuCount': 1,
-                        'PublicIPCount': 5,
-                        'Memory': 512,
-                        'BenchmarkType': 'Hepspec',
-                        'Benchmark': 1006.3,
-                        'ImageId': '\'scilin6\'',
-                        'CloudType': 'OpenNebula'
+        self._values1 = {'VMUUID': '2012-12-04 09:15:01+00:00 CESNET vm-0',
+                         'SiteName': 'CESNET',
+                         'CloudComputeService': 'OpenNebula Service A', 
+                         'MachineName': '\'one-0\'',
+                         'LocalUserId': '5',
+                         'LocalGroupId': '1',
+                         'GlobalUserName': 'None',
+                         'FQAN': 'None',
+                         'VO': 'None',
+                         'VOGroup': 'None',
+                         'VORole': 'None',
+                         'Status': 'completed',
+                         'StartTime': datetime(2011, 10, 17, 8, 31, 4),
+                         'EndTime': datetime(2011, 10, 17, 10, 41, 16),
+                         'SuspendDuration': None,
+                         'WallDuration': None,
+                         'CpuDuration': None,
+                         'CpuCount': 1,
+                         'NetworkType': 'None',
+                         'NetworkInbound': 0,
+                         'NetworkOutbound': 0,
+                         'PublicIPCount': 5,
+                         'Memory': 512,
+                         'Disk': None,
+                         'BenchmarkType': 'Hepspec',
+                         'StorageRecordId': 'None',
+                         'Benchmark': 1006.3,
+                         'ImageId': '\'scilin6\'',
+                         'CloudType': 'OpenNebula',
                         }
         
         self._msg2 = '''
-VMUUID: 2012-08-14 14:00:01+0200 FZJ Accounting Test
+VMUUID: VMUUID 1
 SiteName: FZJ
 CloudComputeService: OpenStack Service A
 MachineName: Accounting Test
 LocalUserId: 1189105086dc4959bc9889383afc43b5
-LocalGroupId: EGI FCTF
-GlobalUserName: /DC=es/DC=irisgrid/O=cesga/CN=javier-lopez
+LocalGroupId: EGI
+GlobalUserName: User 1
 FQAN: /ops/Role=NULL/Capability=NULL
 Status: started
 StartTime: 1343362725
@@ -110,24 +127,35 @@ ImageId: Debian Testing (Wheezy)
 CloudType: Openstack
 '''
 
-        self._values2 = {'SiteName': 'FZJ',
-                        'CloudComputeService': 'OpenStack Service A', 
-                        'MachineName': 'Accounting Test',
-                        'LocalUserId': '1189105086dc4959bc9889383afc43b5',
-                        'GlobalUserName': '/DC=es/DC=irisgrid/O=cesga/CN=javier-lopez',
-                        'FQAN': '/ops/Role=NULL/Capability=NULL',
-                        'VO': 'ops',
-                        'VOGroup': '/ops',
-                        'VORole': 'Role=NULL',
-                        'Status': 'started',
-                        'CpuCount': 1,
-                        'PublicIPCount': 1,
-                        'Memory': 512,
-                        'BenchmarkType': 'Si2k',
-                        'Benchmark': 200,
-                        'ImageId': 'Debian Testing (Wheezy)',
-                        'CloudType': 'Openstack'                  
-                         }
+        self._values2 = {'VMUUID': 'VMUUID 1',
+                         'SiteName': 'FZJ',
+                         'CloudComputeService': 'OpenStack Service A',
+                         'MachineName': 'Accounting Test',
+                         'LocalUserId': '1189105086dc4959bc9889383afc43b5',
+                         'LocalGroupId': 'EGI',
+                         'GlobalUserName': 'User 1',
+                         'FQAN': '/ops/Role=NULL/Capability=NULL',
+                         'VO': 'ops',
+                         'VOGroup': '/ops',
+                         'VORole': 'Role=NULL',
+                         'Status': 'started',
+                         'StartTime': datetime(2012,7,27,4,18,45),
+                         'EndTime': None,
+                         'SuspendDuration': None,
+                         'WallDuration': 1582876,
+                         'CpuDuration': 437,
+                         'CpuCount': 1,
+                         'NetworkType': 'None',
+                         'NetworkInbound': None,
+                         'NetworkOutbound': None,
+                         'PublicIPCount': 1,
+                         'Memory': 512,
+                         'Disk': 0,
+                         'BenchmarkType': 'Si2k',
+                         'Benchmark': 200,
+                         'StorageRecordId': 'None',
+                         'ImageId': 'Debian Testing (Wheezy)',
+                         'CloudType': 'Openstack'}
 
         # A v0.2 style message, used to check we can still
         # support a v0.2 cloud message
@@ -156,18 +184,36 @@ ImageId: 'scilin6'
 CloudType: OpenNebula
 '''
 
-        self._values3 = {'SiteName': 'CESNET',
+        self._values3 = {'VMUUID': '2013-11-14 19:15:21+00:00 CESNET vm-1',
+                         'SiteName': 'CESNET',
                          'CloudComputeService': 'None',
                          'MachineName': '\'one-1\'',
                          'LocalUserId': '5',
+                         'LocalGroupId': '1',
+                         'GlobalUserName': 'None',
+                         'FQAN': 'None',
+                         'VO': 'None',
+                         'VOGroup': 'None',
+                         'VORole': 'None',
                          'Status': 'completed',
+                         'StartTime': datetime(2011, 10, 17, 9, 4, 24),
+                         'EndTime': datetime(2011, 10, 17, 11, 12, 56),
+                         'SuspendDuration': None,
+                         'WallDuration': None,
+                         'CpuDuration': None,
                          'CpuCount': 1,
+                         'NetworkType': 'None',
+                         'NetworkInbound': 0,
+                         'NetworkOutbound': 0,
                          'PublicIPCount': None,
                          'Memory': 512,
+                         'Disk': None,
                          'BenchmarkType': 'None',
                          'Benchmark': 0.0,
+                         'StorageRecordId': 'None',
                          'ImageId': '\'scilin6\'',
                          'CloudType': 'OpenNebula'}
+
 
         self._msg4 = '''
 BenchmarkType: HEPSPEC06
@@ -191,6 +237,9 @@ CloudComputeService: Test Service'''
                          'LocalGroupId': 'Test Local Group ID',
                          'GlobalUserName': 'Test User',
                          'FQAN': 'None',
+                         'VO': 'None',
+                         'VOGroup': 'None',
+                         'VORole': 'None',
                          'Status': 'completed',
                          'StartTime': datetime(1970, 1, 1, 0, 0, 0),
                          'EndTime': None,
@@ -201,8 +250,11 @@ CloudComputeService: Test Service'''
                          'NetworkType': 'None',
                          'NetworkInbound': None,
                          'NetworkOutbound': None,
+                         'PublicIPCount': None,
                          'Memory': None,
                          'Disk': None,
+                         'BenchmarkType': 'HEPSPEC06',
+                         'Benchmark': 0.0,
                          'StorageRecordId': 'None',
                          'ImageId': 'Test Image ID',
                          'CloudType': 'caso/0.3.4 (OpenStack)'}
