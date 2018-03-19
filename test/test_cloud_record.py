@@ -269,12 +269,25 @@ CloudComputeService: Test Service'''
     def test_load_from_msg_value_check(self):
         """Check for correct values in CloudRecords generated from messages."""
         for msg in self.cases.keys():
-        
+
             cr = CloudRecord()
             cr.load_from_msg(msg)
-            
+
             cont = cr._record_content
-        
+
+            # Check the corresponding _values dictionary
+            # has every field in the CloudRecord object.
+            # We do this because this so this test compares
+            # all elements in the CloudRecord, not just those
+            # we expect to be set. This helps catch unexpected
+            # changes (such as changes to default values).
+            for field in cont:
+                if field not in self.cases[msg].keys():
+                    self.fail('The below message has incomplete _values\n.'
+                              '%s\n\n'
+                              '_values missing %s.' %
+                              (msg, field))
+
             for key in self.cases[msg].keys():
                 self.assertEqual(cont[key], self.cases[msg][key], "%s != %s for key %s" % (cont[key], self.cases[msg][key], key))
 
