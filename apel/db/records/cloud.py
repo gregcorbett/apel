@@ -102,7 +102,15 @@ class CloudRecord(Record):
         # Check the values of StartTime and EndTime
         # self._check_start_end_times()
 
-        
+        # Make a simpler check as we don't run the above check.
+        # If the message is missing a StartTime, it causes
+        # problems because it's allowed in CloudRecords but not in
+        # CloudSummaries. As with CpuCount, set a not NULL default.
+        # We use the linux epoch because mysql's zero timestamp
+        # cannot be expressed as a datetime in python.
+        if self._record_content['StartTime'] is None:
+            self._record_content['StartTime'] = datetime(1970, 1, 1, 0, 0, 0)
+
     def _check_start_end_times(self):
         '''Checks the values of StartTime and EndTime in _record_content.
         StartTime should be less than or equal to EndTime.

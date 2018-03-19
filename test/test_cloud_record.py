@@ -192,7 +192,7 @@ CloudComputeService: Test Service'''
                          'GlobalUserName': 'Test User',
                          'FQAN': 'None',
                          'Status': 'completed',
-                         'StartTime': None,
+                         'StartTime': datetime(1970, 1, 1, 0, 0, 0),
                          'EndTime': None,
                          'SuspendDuration': None,
                          'WallDuration': None,
