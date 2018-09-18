@@ -8,19 +8,37 @@ matrix:
     - python: "nightly"
   fast_finish: true
 
-# Route build to container-based infrastructure
-sudo: false
+# Route build to VM-based infrastructure, so we can create directories under
+# /var (as per the setup.py script)
+sudo: requried
 
 # Cache the dependencies installed by pip
 cache: pip
 # Avoid pip log from affecting cache
 before_cache: rm -fv ~/.cache/pip/log/debug.log
 
-# Install defaults to "pip install -r requirements.txt"
+before_install:
+  # Make directories as root. We have to do this here because we can't run
+  # python setup.py install as root due to a conflict between sudo and Travis
+  # virtualenvs.
+  - sudo mkdir -p /var/log/apel /var/run/apel /etc/apel /usr/share/apel /etc/logrotate.d
+  # Make them read write and executable by all so the setup script can be
+  # ran as a user other than root.
+  - sudo chmod a+rwx /var/log/apel /var/run/apel /etc/apel /usr/share/apel /etc/logrotate.d
+
+install:
+  # Doing this because pip install seems not to install test requirements
+  # We need to alter PYTHONPATH because the setup.py script does not install
+  # bin as a python package.
+  - export PYTHONPATH=$PYTHONPATH:`pwd -P`
+  # This is needed to install test requirements, can go away after improvements
+  # to setup.py (to handle those) or be modified to install test only after
+  # rebasing
+  - pip install -r requirements.txt
+  - python setup.py install
 
 # Commands that prepare things for the test
 before_script:
-  - export PYTHONPATH=$PYTHONPATH:`pwd -P`
   - cd test
 
 script: coverage run --branch --source=apel,bin -m unittest2 discover --buffer
