@@ -31,16 +31,14 @@ install:
   # We need to alter PYTHONPATH because the setup.py script does not install
   # bin as a python package.
   - export PYTHONPATH=$PYTHONPATH:`pwd -P`
-  # This is needed to install test requirements, can go away after improvements
-  # to setup.py (to handle those) or be modified to install test only after
-  # rebasing
-  - pip install -r requirements.txt
-  - python setup.py install
+  # As coveralls is only a requirement for running the unitests on Travis,
+  # install coveralls now.
+  - pip install coveralls
 
 # Commands that prepare things for the test
 before_script:
   - cd test
 
-script: coverage run --branch --source=apel,bin -m unittest2 discover --buffer
+script: coverage run --branch --source=../apel,../bin ../setup.py test
 
 after_success: coveralls

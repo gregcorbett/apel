@@ -82,7 +82,7 @@ def main():
           extras_require={
               'python-daemon': ['python-daemon'],
           },
-          packages=find_packages(exclude=['bin']),
+          packages=find_packages(exclude=['bin', 'test']),
           scripts=['bin/apelclient',
                    'bin/apelparser',
                    'bin/apeldbloader',
@@ -99,7 +99,18 @@ def main():
           # as a zipfile, for maximum performance!
           # We have disabled this feature so installing via the setup
           # script is similar to installing the RPM apel-ssm
-          zip_safe=False)
+          zip_safe=False,
+          # The following two settings allow the test suite
+          # to be run via 'python setup.py test'
+
+          # The test command runs the project's unit tests without
+          # actually deploying it, by temporarily putting the project's
+          # source on sys.path, after first running build_ext -i and
+          # egg_info to ensure that any C extensions and
+          # project metadata are up-to-date.
+          # The python package where the tests are located
+          test_suite='test',
+          tests_require=['unittest2', 'mock'])
 
     # Remove temporary files with deployment names
     if 'install' in sys.argv:
