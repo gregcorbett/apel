@@ -62,6 +62,25 @@ class LoaderTest(unittest.TestCase):
         self.mock_db.load_records.assert_called_once_with([],
                                                           source='test signer')
 
+    def test_load_non_ascii(self):
+        """
+        Check what happens when the loader tries to load a (StAR) record
+        containing non-ascii characters.
+        """
+        in_q = dirq.queue.Queue('./queue', schema=schema)
+        current_msg = in_q.first()
+        in_q.lock(current_msg)
+        data = in_q.get(current_msg)
+        # msg_id = data['empaid']
+        signer = data['signer']
+        msg_text = data['body']
+
+        self.loader = apel.db.loader.Loader('./queue', True, 'mysql',
+                                            'host', 1234, 'db', 'user', 'pwd',
+                                            'Egg and bacon')
+                                            
+        self.loader.load_msg(msg_text, signer)
+
     def tearDown(self):
         shutil.rmtree(self.dir_path)
         mock.patch.stopall()

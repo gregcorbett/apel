@@ -1,0 +1,21 @@
+
+<sr:StorageUsageRecords
+ xmlns:sr="http://eu-emi.eu/namespaces/2011/02/storagerecord">
+ <sr:StorageUsageRecord>  
+  <sr:RecordIdentity sr:createTime="2017-12-05T15:53:01Z"
+                     sr:recordId="spam"/>
+  <sr:Site>greasy spoon café</sr:Site>
+  <sr:StorageSystem>menu</sr:StorageSystem>
+  <sr:StartTime>2017-12-04T15:53:01Z</sr:StartTime>
+  <sr:EndTime>2017-12-05T15:53:01Z</sr:EndTime>
+  <sr:ResourceCapacityUsed>159509138643</sr:ResourceCapacityUsed>
+  <sr:SubjectIdentity>
+    <sr:LocalUser>Lobster Thermidor aux crevettes with a Mornay sauce, garnished with truffle pâté, brandy and a fried egg on top, and Spam</sr:LocalUser>
+    <sr:LocalGroup>Monty Python</sr:LocalGroup>
+    <sr:UserIdentity>Michael Palin</sr:UserIdentity>
+    <sr:Group>Monty Python</sr:Group>
+    <sr:GroupAttribute sr:attributeType='title'>sketch show</sr:GroupAttribute>
+    <sr:GroupAttribute sr:attributeType='scope'>tv show</sr:GroupAttribute>
+  </sr:SubjectIdentity>
+</sr:StorageUsageRecord>
+</sr:StorageUsageRecords>
